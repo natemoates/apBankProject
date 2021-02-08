@@ -1,11 +1,26 @@
-# This is a sample Python script.
+import math
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+P = float(input('Please enter account balance: '))
+rate = float(input('Please enter interest rate: '))
+compound = input('How often is this balance compounded? (enter cont. for continuous compounding): ')
+if compound.isdigit():
+    compound = int(compound)
+time = float(input('How long will this balance be compounded?: '))
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def truncate(number):
+    factor = 10.0 ** 2
+    return math.trunc(number * factor) / factor
 
 
+def calc_interest(r, c, t):
+    if c == "cont." or type(c) == int:
+        if c != "cont." and r < 1:
+            return truncate(P*((1+(r/c))**(c*t)))
+        elif c == "cont." and r < 1:
+            return truncate(P*(math.e ** (r * t)))
+    else:
+        return "you broke it"
+
+
+print(calc_interest(rate, compound, time))
